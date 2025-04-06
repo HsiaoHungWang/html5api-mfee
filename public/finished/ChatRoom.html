@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket - 聊天室</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        #chat2 .form-control {
+            border-color: transparent;
+        }
+
+        #chat2 .form-control:focus {
+            border-color: transparent;
+            box-shadow: inset 0px 0px 0px 1px transparent;
+        }
+
+        .divider:after,
+        .divider:before {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <div class="container py-5">
+
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-6">
+
+                    <div class="card" id="chat2">
+                        <div class="card-header d-flex justify-content-between align-items-center p-3">
+                            <h5 class="mb-0">Chat</h5>
+                            <div class="d-flex justify-content-end">
+                                <i class="bi bi-person-fill input-group-text"></i>
+                                <input type="text" id="userName" class="form-control" placeholder="姓名">
+                                <input type="button" value="加入" id="buttonToggle" class="btn btn-primary" />
+                            </div>
+
+                        </div>
+                        <div class="card-body">
+
+                        </div>
+                        <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3">
+
+                            <input type="text" id="message" class="form-control" placeholder="請輸入訊息" />
+                            <input type="button" value="傳送" id="buttonSend" class="ms-3 btn btn-primary" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+    <script>
+        const btnToggle = document.querySelector('#buttonToggle');
+        const txtName = document.querySelector('#userName');
+        const messageBody = document.querySelector('.card-body');
+        const btnSend = document.querySelector('#buttonSend');
+        const inpMessage = document.querySelector('#message');
+        let socket;
+        let theName = "";
+        const wsUrl = 'ws://localhost:8080';
+
+        //加入聊天室
+        btnToggle.addEventListener('click', event => {
+            theName = txtName.value ? txtName.value : "Guest";
+
+            if (event.target.value === "加入") {
+                event.target.value = "離開";
+                //todo 建立WebSocket物件
+                socket = new WebSocket(wsUrl);
+                console.log(socket);
+
+
+                //todo 接收WebSocket傳送過來的資料事件
+                socket.onmessage = (event) => {
+                    showMessage(JSON.parse(event.data));
+                };
+                //todo 連線建立成功事件
+                socket.onopen = (event) => {
+                    console.log("open");
+                    const datas = { "name": theName };
+                    //todo 將訊息傳遞給 WebSocket Server
+                    socket.send(JSON.stringify(datas));
+                };
+                //todo 關閉WebSocket連線事件
+                socket.onclose = (event) => {
+                    console.log(event);
+                };
+
+                //todo WebSocket連線發生錯誤事件
+                socket.onerror = (error) => {
+                    console.error(error);
+                };
+            } else {
+                event.target.value = "加入";
+                //todo 關閉WebSocket連線
+                socket.close();
+            }
+        })
+
+        //傳送訊息到聊天室
+        btnSend.addEventListener('click', () => {
+            const data = {
+                message: inpMessage.value
+            }
+            //todo 將訊息傳遞給 WebSocket Server
+            socket.send(JSON.stringify(data));
+            inpMessage.value = "";
+        })
+
+        //顯示聊天室的訊息
+        function showMessage(data) {
+            console.log(data);
+            let div1 = '';
+
+            let htmlMessage = `
+                            <div class="d-flex flex-row justify-content-start">
+                                <span>${data.name}</span>
+                                <div>
+                                    <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">${data.text}</p>
+                                    <p class="small ms-3 mb-3 rounded-3 text-muted">${formatTime(new Date(data.time))}</p>
+                                </div>
+                            </div>
+
+                                `
+
+            if (data.name === txtName.value) {
+                htmlMessage = `
+                              <div class="d-flex flex-row justify-content-end mb-4">
+                                <div>
+                                    <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">${data.text}</p>
+                                     <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">${formatTime(new Date(data.time))}</p>
+                         
+                                          </div>
+                                <span>${data.name}</span>
+                            </div>
+
+                                `
+            }
+            messageBody.insertAdjacentHTML('beforeend', htmlMessage);
+
+        }
+
+
+        //格式化顯示的時間
+        function formatTime(dt) {
+            return (dt.toLocaleString([], {
+                hour: '2-digit',
+                minute: '2-digit'
+            }));
+        }
+
+    </script>
+</body>
+
+</html>

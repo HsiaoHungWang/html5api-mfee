@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>內建表單驗證</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <h2>HTML5 Form Validation</h2>
+            <p>請根據 HTML 中的註解說明，完成表單驗證功能</p>
+            <form id="registerForm">
+                <div class="mb-3">
+                    <label for="account" class="form-label">帳號</label>
+                    <input type="text" class="form-control" id="account">
+                    <!--
+                      1.網頁載入時將游標停駐在帳號的文字輸入方塊中
+                      2.取消瀏覽器會自動記錄輸入資料的功能
+                      3.請確定帳號一定要輸入
+                    -->
+                </div>
+                <div class="mb-3">
+                    <label for="pwd1" class="form-label">密碼</label>
+                    <input type="password" class="form-control" id="pwd1">
+                </div>
+                <div class="mb-3">
+                    <label for="pwd2" class="form-label">密碼確認</label>
+                    <input type="password" class="form-control" id="pwd2">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">電子郵件</label>
+                    <input type="" class="form-control" id="email">
+                    <!--1.請填入正確type的屬性值. 2.確定符合正確的電子郵件格式-->
+                </div>
+                <div class="mb-3">
+                    <label for="blog" class="form-label">部落格</label>
+                    <input type="" class="form-control" id="blog">
+                    <!--1.請填入正確type的屬性值. 2.確定符合正確的網址格式-->
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">連絡電話</label>
+                    <input type="" class="form-control" id="phone">
+                    <!--
+                      1.請填入正確的type.
+                      2.提示使用者輸入正確的手機格式(0911-111-111)
+                      3.確定手機格式正確(09\d{2}-\d{3}-\d{3})
+                     -->
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="age">年紀</label>
+                    <input type="" class="form-control" id="age">
+                    <!--1.請填入正確的type. 2.最小值10 3.最大值100 4.預設值20-->
+                </div>
+                <button type="submit" class="btn btn-primary">送出</button>
+            </form>
+        </div>
+        <div class="col-3"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+    <script>
+
+    </script>
+</body>
+
+</html>

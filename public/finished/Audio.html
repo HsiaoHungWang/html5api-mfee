@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音樂播放</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <style>
+        #playlist li:hover {
+            cursor: pointer;
+            text-decoration: underline;
+            color: blue;
+        }
+
+        #myCanvas {
+            border: 1px solid green;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Audio API</h1>
+    <hr />
+    <p>歌曲撥放清單</p>
+    <ul id="playlist" class="list-group"></ul>
+    <hr />
+    <input type="button" value="play" id="buttonPause" />
+    <input type="button" value="<" id="buttonPrev" title="上一首" />
+    <input type="button" value=">" id="buttonNext" title="下一首" />
+    <input type="range" id="volume" min="0" max="10" value="1" step="1">
+    <hr />
+    <span id="playSong"></span>
+    <span id="info"></span>
+    <canvas id="myCanvas" width="300" height="20"></canvas>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+    <script>
+        const ul = document.querySelector('#playlist');  //播放清單
+        const spanPlay = document.querySelector('#playSong'); //顯示目前正在播放歌曲名稱
+        const spanInfo = document.querySelector('#info'); //顯示目前播放進度
+        const btnPause = document.querySelector("#buttonPause"); //播放|暫停按鈕
+        const volume = document.querySelector("#volume"); //聲音調整
+
+        const musics = [
+            { name: "十年", url: "/musics/十年.mp3" },
+            { name: "K歌之王", url: "/musics/K歌之王.mp3" },
+            { name: "兄妹", url: "/musics/兄妹.mp3" },
+            { name: "好就不見", url: "/musics/好久不見.mp3" },
+            { name: "我們都寂寞", url: "/musics/我們都寂寞.mp3" }];
+        let index = 0;  //目前在正撥放歌曲的index
+
+        //建立播放清單
+        const liMusics = musics.map((item, index) => `<li onclick="playsong('${index}')" class="list-group-item w-25">${item.name}</li>`);
+        ul.innerHTML = liMusics.join("");
+
+        //todo 建立Audio物件
+        const audio = new Audio();
+
+        //建立canvas繪圖物件
+        var canvas = document.querySelector("#myCanvas"),
+            context = canvas.getContext("2d");
+        //利用Canvas控制音樂撥放進度
+        canvas.addEventListener("click", function (event) {
+            var t = (event.offsetX / canvas.width) * audio.duration;
+            audio.currentTime = t;
+        })
+
+
+        //播放初始音量
+        //將撥放音量設定成0.5
+        audio.volume = 0.5;
+
+        //撥放使用者點選的音樂
+        function playsong(idx) {
+            index = idx;
+
+            //設定目前正在播放清單歌曲的背景色
+            setActive();
+            //修改播放按鈕文字
+            btnPause.value = "pause";
+
+            //從musics的JSON物件中讀取要撥放的音樂          
+            const playingFile = musics[idx];
+            //將其音樂檔案的位置設定給audio物件
+            audio.setAttribute('src', playingFile.url);
+            //todo 使用甚麼方法撥放歌曲
+            audio.play();
+            //將撥放的音樂名稱顯示在id為playSong的span標籤中
+            spanPlay.innerHTML = `現在播放：${playingFile.name}`;
+        }
+
+        //todo 在甚麼事件中顯示撥放進度     
+        audio.addEventListener("timeupdate", () => {
+            //將撥放的音樂的進度顯示在id為info的span標籤中  目前播放進度/整首歌的播放長度
+            //todo 用甚麼屬性取得播放進度，用甚麼屬性取得整首歌的長度
+            spanInfo.innerHTML = `${formatTime(audio.currentTime)}/${formatTime(audio.duration)}`;
+
+
+            //todo 利用Canvas畫出目前撥放進度的長條圖
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            var w = (audio.currentTime / audio.duration) * canvas.width;
+            context.fillStyle = "lightgreen";
+            context.fillRect(0, 0, w, canvas.height);
+
+
+        }, false);
+
+        //一首歌曲撥放完後，自動撥放下一首歌
+        //todo 甚麼事件表示歌曲播放完成
+        audio.addEventListener("ended", next);
+
+
+        //下一首歌
+        document.querySelector("#buttonNext").addEventListener("click", next);
+
+        function next() {
+            index = parseInt(index);
+            index += 1;
+            if (index >= musics.length) {
+                index = 0;
+            }
+            //撥歌
+            playsong(index);
+        }
+
+        //上一首歌
+        document.querySelector("#buttonPrev").addEventListener("click", function () {
+            index = parseInt(index);
+            index -= 1;
+            if (index <= 0) {
+                index = 0;
+            }
+            //撥歌
+            playsong(index);
+        }, false);
+
+        //暫停及撥放
+        btnPause.addEventListener("click", function () {
+            if (this.value == "pause") {
+                //如果button的value是pause
+                //表示按下按鈕就要暫停撥放音樂
+                audio.pause();
+                this.value = "play";
+            } else {
+                //如果button的value是play
+                //表示按下按鈕就要撥放音樂
+                audio.play();
+                this.value = "pause";
+            }
+
+        }, false);
+
+
+        //設定音量的大小 parseFloat(this.value / 10)
+        //todo 用甚麼屬性控制音量
+        volume.addEventListener("change", event => audio.volume = parseFloat(event.target.value / 10));
+
+        //格式化時間 mm:ss
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60).toString().padStart(2, 0);
+            seconds = Math.floor(seconds % 60).toString().padStart(2, 0);
+            return `${minutes}:${seconds}`;
+        }
+
+        window.addEventListener('blur', () => audio.pause());
+        window.addEventListener('focus', () => audio.play());
+
+        //設定目前播放歌曲active
+        const setActive = () => {
+            //清除所有 li 的 active class
+            ul.childNodes.forEach(li => {
+                li.classList.remove('active');
+            })
+            //設定目前正在播放歌曲 li 的 active class
+            ul.childNodes[index].classList.add('active');
+        }
+    </script>
+
+</body>
+
+</html>

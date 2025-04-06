@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 APIs</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <!-- 引用 mainfest.json -->
+    <link rel="manifest" href="manifest.json" />
+
+</head>
+
+<body>
+    <h2>HTML5 APIs</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <!-- <div class="col">
+            <div class="card h-100 text-bg-light">
+                <div class="card-header">
+                    <h5>主題</h5>
+                </div>
+                <div class="card-body">
+                    <p>說明</p>
+                    <a href="#" class="btn btn-primary">範例 </a>
+                    <a href="#" class="btn btn-secondary">練習 </a>
+                </div>
+                <div class="card-footer">
+                    <small>API網址</small>
+                </div>
+            </div>
+        </div>  -->
+        <div class="col">
+            <div class="card h-100 text-bg-light">
+                <div class="card-header">
+                    <h5>表單驗證</h5>
+                </div>
+                <div class="card-body">
+                    <p>HTML5 提供了一些內建的驗證屬性，瀏覽器針對這些驗證，提供了預設的驗證訊息及訊息顯示的方式，這裡的練習主要是學習如何自訂錯誤訊息及顯示的方式</p>
+                    <a href="/FormPractice.html" target="_blank" class="btn btn-primary mb-1">內建表單驗證設定</a>
+                    <a href="FormCustomValidation.html" target="_blank" class="btn btn-success mb-1">自訂表單驗證練習</a>
+                </div>
+                <div class="card-footer"><small>https://html.spec.whatwg.org/multipage/forms.html#forms</small></div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-bg-light">
+                <div class="card-header">
+                    <h5>&lt;audio&gt;</h5>
+                </div>
+                <div class="card-body">
+                    <p>在網頁上播放音樂可以使用&lt;audio&gt;，也可以透過Audio API控制音樂的播放</p>
+                    <a href="/Audio.html" target="_blank" class="btn btn-primary mb-1">Audio API 播放音樂</a>
+                </div>
+                <div class="card-footer">
+
+                    <small>https://html.spec.whatwg.org/multipage/media.html#the-audio-element</small>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-bg-light">
+                <div class="card-header">
+                    <h5>&lt;video&gt;</h5>
+                </div>
+                <div class="card-body">
+                    <p>在網頁上播放影片可以使用&lt;vedio&gt;標籤，它有跟Audio標籤一樣的API</p>
+                    <a href="Video.html" target="_blank" class="btn btn-primary mb-1">影片播放</a>
+                </div>
+                <div class="card-footer">
+                    <small>https://html.spec.whatwg.org/multipage/media.html#the-video-element</small>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-bg-light">
+                <div class="card-header">
+                    <h5>Canvas</h5>
+                </div>
+                <div class="card-body">
+                    <p>要在網頁上繪圖就是要使用&lt;canvas&gt;，canvas 標籤就像是將圖紙準備好，然後透過繪圖物件，在圖紙上繪圖</p>
+                    <a href="Canvas.html" target="_blank" class="btn btn-primary mb-1">基本圖形</a>
+                    <a href="CanvasBarChart.html" target="_blank" class="btn btn-secondary mb-1">長條圖</a>
+                    <a href="Drawing.html" target="_blank" class="btn btn-success mb-1">小畫家</a>
+                </div>
+                <div class="card-footer">
+                    <small>https://html.spec.whatwg.org/multipage/canvas.html#the-canvas-element</small>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-bg-light">
+                <div class="card-header">
+                    <h5>SVG</h5>
+                </div>
+                <div class="card-body">
+                    <p>SVG（Scalable Vector Graphics），可以使用標籤的方式在網頁上繪製向量圖形，圖形在放大縮小時不會失真。</p>
+                    <a href="SVG.html" target="_blank" class="btn btn-primary mb-1">基本圖形</a>
+                    <a href="SVGBarChart.html" target="_blank" class="btn btn-secondary mb-1">長條圖</a>
+                </div>
+                <div class="card-footer">
+                    <small>https://www.w3.org/Graphics/SVG/</small>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-bg-light">
+                <div class="card-header">
+                    <h5>Drag And Drop</h5>
+                </div>
+                <div class="card-body">
+                    <p>當使用者滑鼠點選某個標籤時，可以透過拖曳的方式移動標籤，在移動到某個規劃好的區域時，可以放開滑鼠，將此標籤移動到此區域</p>
+                    <a href="DragAndDrop.html" target="_blank" class="btn btn-primary mb-1">拖曳及放下</a>
+                    <a href="Shopping.html" target="_blank" class="btn btn-success mb-1">加入購物車</a>
+
+                </div>
+                <div class="card-footer">
+                    <small>https://html.spec.whatwg.org/multipage/dnd.html#dnd</small>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-bg-light">
+                <div class="card-header">
+                    <h5>File And FileReader</h5>
+                </div>
+                <div class="card-body">
+                    <p>使用者選取了檔案後，可以透過 File API 用來取得檔案相關資訊，透過 FileReader API 取得檔案內容</p>
+                    <a href="FileAPI.html" target="_blank" class="btn btn-primary">File API</a>
+                    <a href="FileReaderText.html" target="_blank" class="btn btn-secondary mb-1">讀取文字</a>
+                    <a href="FileReaderImage.html" target="_blank" class="btn btn-info mb-1">讀取圖片</a>
+                </div>
+                <div class="card-footer">
+                    <small>https://www.w3.org/TR/FileAPI/</small>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-bg-light">
+                <div class="card-header">
+                    <h5>Web Storage</h5>
+                </div>
+                <div class="card-body">
+                    <p>在瀏覽器中除了可以透過 cookies 儲存一些資料外，也可以透過 Web storage 來儲存</p>
+                    <a href="WebStorage.html" target="_blank" class="btn btn-primary mb-1">localStorage vs
+                        sessionStorage</a>
+                    <a href="StickyNotes.html" target="_blank" class="btn btn-success mb-1">便利貼</a>
+                </div>
+                <div class="card-footer">
+                    <small>https://html.spec.whatwg.org/multipage/#toc-webstorage</small>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-bg-light">
+                <div class="card-header">
+                    <h5>Server Sent Event</h5>
+                </div>
+                <div class="card-body">
+                    <p>Server Sent Event 是一種單向通訊的技術，讓瀏覽器可以單方向的收到伺服器傳送過來的資料</p>
+                    <a href="SSEClient.html" target="_blank" class="btn btn-primary mb-1">EventSource</a>
+                    <a href="YoubikeClient.html" target="_blank" class="btn btn-success mb-1">Youbike即時資訊</a>
+                </div>
+                <div class="card-footer">
+                    <small>https://html.spec.whatwg.org/multipage/server-sent-events.html#server-sent-events</small>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-bg-light">
+                <div class="card-header">
+                    <h5>WebSocket</h5>
+                </div>
+                <div class="card-body">
+                    <p>WebSocket 是一種網路雙向的傳輸協定，常用來作線上遊戲、聊天室等功能。</p>
+                    <a href="WebSocket.html" target="_blank" class="btn btn-primary mb-1">WebSocket API</a>
+                    <a href="ChatRoom.html" target="_blank" class="btn btn-success mb-1">聊天室</a>
+                </div>
+                <div class="card-footer">
+                    <small>https://websockets.spec.whatwg.org/</small>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-bg-light">
+                <div class="card-header">
+                    <h5>Clipboard</h5>
+                </div>
+                <div class="card-body">
+                    <p>用來讀取與寫入剪貼簿的 JavaScript API</p>
+                    <a href="Clipboard.html" target="_blank" class="btn btn-primary mb-1">Clipboard API</a>
+
+                </div>
+                <div class="card-footer">
+                    <small>https://www.w3.org/TR/clipboard-apis/</small>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-bg-light">
+                <div class="card-header">
+                    <h5>Notification</h5>
+                </div>
+                <div class="card-body">
+                    <p>Notification 透過瀏覽器發出訊息，透過使用者電腦系統的桌面通知來顯示訊息。</p>
+                    <a href="Notification.html" target="_blank" class="btn btn-primary mb-1">Notification API</a>
+
+                </div>
+                <div class="card-footer">
+                    <small>https://notifications.spec.whatwg.org/</small>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-bg-light">
+                <div class="card-header">
+                    <h5>Geolocation</h5>
+                </div>
+                <div class="card-body">
+                    <p>Geolocation 主要是透過瀏覽器，取得上網裝置所在位置的經緯度，常搭配 Google Map 或 OpenStreetMap 等地圖圖資一起使用。</p>
+                    <a href="Geolocation.html" target="_blank" class="btn btn-primary  mb-1">Geolocation API</a>
+
+                </div>
+                <div class="card-footer">
+                    <small>https://www.w3.org/TR/geolocation/</small>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-bg-light">
+                <div class="card-header">
+                    <h5>Workers</h5>
+                </div>
+                <div class="card-body">
+                    <p>瀏覽器中的JavaScript程式如果需要執行比較久時，網頁的操作會被卡住，因此需要長時間執行的程式，會放到 Worker 中執行。</p>
+                    <a href="WebWorker.html" target="_blank" class="btn btn-primary mb-1">Web workers</a>
+                    <a href="SharedWorker1.html" target="_blank" class="btn btn-secondary mb-1">SharedWorker1</a>
+                    <a href="SharedWorker2.html" target="_blank" class="btn btn-secondary mb-1">SharedWorker2</a>
+
+                </div>
+                <div class="card-footer">
+                    <small>https://html.spec.whatwg.org/multipage/#toc-workers</small>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-bg-light">
+                <div class="card-header">
+                    <h5>啟動圖示與離線應用</h5>
+                </div>
+                <div class="card-body">
+                    <p>透過 manifest.json 的宣告，可以模擬出跟原生應用程式一樣，在桌面上出現啟動應用程式的圖示</p>
+                    <p>在Service Workers中，透過Cache Storage來儲存靜態檔案，當瀏覽器中要求檔案時，如果Cache Storage中有檔案會直接回傳</p>
+                    <a href="main.html" target="_blank" class="btn btn-primary mb-1">離線應用</a>
+                </div>
+                <div class="card-footer">
+                    <small>https://www.w3.org/TR/appmanifest/</small>
+                    <small>https://www.w3.org/TR/service-workers/</small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自訂表單驗證</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <style>
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <h2>HTML5 Form Validation</h2>
+            <p>自訂表單的驗證訊息及驗證訊息的顯示方式</p>
+            <form id="registerForm">
+                <div class="input-group">
+                    <label for="account" class="input-group-text">帳號</label>
+                    <input type="text" class="form-control" id="account" required autofocus autocomplete="off">
+                    <span class="input-group-text bg-danger text-white hide"><i class="bi bi-x-lg"></i></span>
+                </div>
+                <div class="mb-3"><small class="text-danger hide" data-id="account"></small></div>
+                <div class="input-group mb-3">
+                    <label for="pwd1" class="input-group-text">密碼</label>
+                    <input type="password" class="form-control" id="pwd1">
+                    <span class="input-group-text bg-danger text-white hide"><i class="bi bi-x-lg"></i></span>
+                </div>
+                <div class="mb-3">
+                    <small class="text-danger hide" data-id="pwd1"></small>
+                </div>
+                <div class="input-group">
+                    <label for="pwd2" class="input-group-text">密碼確認</label>
+                    <input type="password" class="form-control" id="pwd2">
+                    <span class="input-group-text bg-danger text-white hide"><i class="bi bi-x-lg"></i></span>
+                </div>
+                <div class="mb-3">
+                    <small class="text-danger hide" data-id="pwd2"></small>
+                </div>
+                <div class="input-group">
+                    <label for="email" class="input-group-text">電子郵件</label>
+                    <input type="email" class="form-control" id="email">
+                    <span class="input-group-text bg-danger text-white hide"><i class="bi bi-x-lg"></i></span>
+                </div>
+                <div class="mb-3">
+                    <small class="text-danger hide" data-id="email"></small>
+                </div>
+                <div class="input-group">
+                    <label for="blog" class="input-group-text">部落格</label>
+                    <input type="url" class="form-control" id="blog">
+                    <span class="input-group-text bg-danger text-white hide"><i class="bi bi-x-lg"></i></span>
+                </div>
+                <div class="mb-3">
+                    <small class="text-danger hide" data-id="blog"></small>
+                </div>
+                <div class="input-group">
+                    <label for="phone" class="input-group-text">連絡電話</label>
+                    <input type="tel" class="form-control" id="phone" placeholder="0911-222-333"
+                        pattern="09\d{2}-\d{3}-\d{3}">
+                    <span class="input-group-text bg-danger text-white hide"><i class="bi bi-x-lg"></i></span>
+                </div>
+                <div class="mb-3">
+                    <small class="text-danger hide" data-id="phone"></small>
+                </div>
+                <div class="input-group">
+                    <label class="input-group-text" for="age">年紀</label>
+                    <input type="number" class="form-control" id="age" min="10" max="100" step="2">
+                    <span class="input-group-text bg-danger text-white hide"><i class="bi bi-x-lg"></i></span>
+                </div>
+                <div class="mb-3">
+                    <small class="text-danger hide" data-id="age"></small>
+                </div>
+                <button type="submit" class="btn btn-primary" id="buttonSubmit">送出</button>
+
+            </form>
+        </div>
+        <div class="col-3"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+    <script>
+        const registerFrm = document.querySelector('#registerForm');
+        const inputs = document.querySelectorAll('input');
+        const btnSubmit = document.querySelector('#buttonSubmit');
+        const ulSummary = document.querySelector('#summary');
+
+        //自訂驗證的錯誤訊息
+        const validate = event => {
+            const title = document.querySelector(`label[for="${event.target.id}"]`).firstChild.nodeValue;
+            //隱藏錯誤訊息
+            if (event.target.value != "") {
+                const spn = document.querySelector(`#${event.target.id}~span`);
+                const sml = document.querySelector(`small[data-id="${event.target.id}"]`);
+                spn.classList.add('hide');
+                sml.classList.add('hide');
+            }
+
+            if (event.target.id == "pwd2") {
+                //檢查密碼及密碼確認是否一致
+                if (event.target.value != document.querySelector('#pwd1').value) {
+                    event.target.setCustomValidity("密碼不一致!!");
+                } else {
+                    event.target.setCustomValidity("");
+                }
+            } else {
+                //todo1
+                const s = event.target.validity; //取得表單的驗證狀態使用甚麼屬性
+                let strMessage = "";
+                //自訂驗證的錯誤訊息
+                //todo2
+                //請根據 strMessage 的說明填寫空格中的驗證狀態屬性
+                switch (true) {
+                    case s.valueMissing:
+                        strMessage = `${title}是必填欄位`;
+                        break;
+                    case s.patternMismatch:
+                        strMessage = `${title}格式不正確`;
+                        break;
+                    case s.typeMismatch:
+                        strMessage = `${title}型態不符`;
+                        break;
+                    case s.rangeOverflow:
+                        strMessage = `${title}超過最大值`;
+                        break;
+                    case s.rangeUnderflow:
+                        strMessage = `${title}超過最小值`;
+                        break;
+                    case s.tooLong:
+                        strMessage = `${title}超過長度`;
+                        break;
+                    case s.stepMismatch:
+                        strMessage = `${title}級數不對`;
+                        break;
+
+                }
+                //todo3
+                event.target.setCustomValidity(strMessage);  //自訂驗證訊息用甚麼方法
+            }
+        }
+
+        inputs.forEach(input => {
+            input.addEventListener("blur", validate);
+        })
+
+        //todo4
+        //取消預設的驗證訊息的顯示方式
+        registerFrm.addEventListener('invalid', function (event) {
+            event.preventDefault();
+        }, true);
+
+        btnSubmit.addEventListener('click', event => {
+            event.preventDefault(); //取消Submit的預設行為
+            //checkValidity()回傳true，表示表單驗證都通過
+            //回傳false，表示至少有一個錯誤
+            if (registerFrm.checkValidity()) {
+                registerFrm.submit(); //如果表單驗證都正確就直接Submit
+                return;
+            }
+            //欄位驗證有錯誤，會加上invalid的屬性
+            // 可以透過 :invalid 找到這些驗證有錯的欄位
+            const invalidInputs = registerFrm.querySelectorAll(':invalid');
+
+            //顯示錯誤圖示及錯誤訊息
+            invalidInputs.forEach(input => {
+                const spn = document.querySelector(`#${input.id}~span`);
+                spn.classList.remove('hide');
+                const sml = document.querySelector(`small[data-id="${input.id}"]`);
+                sml.innerHTML = `<strong>${input.validationMessage}</strong>`;
+                sml.classList.remove('hide');
+            })
+
+        });
+    </script>
+</body>
+
+</html>

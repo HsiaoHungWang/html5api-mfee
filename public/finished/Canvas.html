@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>繪圖</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <style>
+        #myCanvas {
+            border: 1px solid green;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Canvas</h1>
+    <canvas id="myCanvas" width="400" height="300"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+    <script>
+        const canvas = document.querySelector('#myCanvas');
+        const context = canvas.getContext('2d');
+        context.fillStyle = "lightgreen";
+        context.strokeStyle = "red";
+        context.lineWidth = "3";
+
+        //繪製矩形
+        // context.fillRect(100,50,200,90);
+        // context.strokeRect(100,160,200,90);
+        // context.clearRect(150,70,100,50);
+
+        //畫線
+        // context.beginPath();
+        // context.moveTo(50,150);
+        // context.lineTo(50,250);
+        // context.lineTo(200,250);
+        // context.closePath();
+        // context.stroke();
+
+        // context.beginPath();		//開始一段新的路徑
+        // context.moveTo(100, 150);  //移到x=100,y=150的位置上(起始點)
+        // context.lineTo(250, 75);	//從上一個位置移到x=250,y=75
+        // context.lineTo(125, 30);	//從上一個位置移到x=125,y=30
+        // context.closePath();		//連接起點到終點
+
+        // context.lineWidth = 5;	//指定線條的粗細
+        // context.strokeStyle ="red";	//指定線條的顏色
+        // context.stroke();		//開始繪製線條
+
+        // context.fillStyle ="green";	//填滿形狀的顏色
+        // context.fill();
+
+        //畫弧及圓
+        // var x = canvas.width / 2;
+        // var y = canvas.height / 2;
+        // var r = 100;
+        // context.moveTo(x, y);
+        // //context.arc(x,y,r,Math.PI * 1, Math.PI * 1.5, false);  //弧
+        // context.arc(x, y, r, Math.PI * 0, Math.PI * 2, false); //圓
+        // context.fill();
+
+
+        //圖
+        // const imgObject = new Image();
+        // imgObject.src = "/images/cars.jpg";
+        // imgObject.addEventListener('load', function () {
+        //     context.drawImage(imgObject, 0, 0);
+        //     context.drawImage(imgObject, 0, 0, 200, 150);
+        //     context.drawImage(imgObject, 190, 85, 200, 180, 0, 0, 100, 90);
+        // })
+
+        //字
+        // const x = canvas.width / 2;
+        // const y = canvas.height / 2;
+        // context.font = "48px arial";
+        // context.textAlign = "center";
+        // context.fillText('Hello Cavans!!', x, y);
+        //context.strokeText('Hello Cavans!!', x, y);
+
+    </script>
+</body>
+
+</html>

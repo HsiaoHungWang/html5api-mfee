@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebWorker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <h1>WebWorker</h1>
+    <!--比較兩種質數計算的差別-->
+    <input type="button" value="質數計算" onclick="sosucal()" />
+    <input type="button" value="質數計算使用Worker" onclick="sosucal1()" />
+    <br />
+    <div id="result">計算中</div>
+    <input type="text" id="a" name="a">+
+    <input type="text" id="b" name="b">=
+    <input type="text" id="c" name="c">
+    <input type="button" value="Calculate" onclick="cal()">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+    <script>
+        function sosucal1() {
+            //呼叫 Web Worker /javascripts/sosu-worker1.js
+            const worker = new Worker("../javascripts/sosu-worker1.js");
+            const divResult = document.querySelector('#result');
+            worker.onmessage = function (event) {
+                divResult.textContent = event.data;
+            }
+        }
+
+
+
+
+        function sosucal() {
+            var count = 0;
+
+            for (var n = 2; n <= 10000000; n++) {
+                var is_prime = true;
+                for (var i = 2; i <= Math.sqrt(n); i++) {
+                    if (n % i == 0) {
+                        is_prime = false;
+                        break;
+                    }
+                }
+
+                if (is_prime) {
+                    count++;
+                    document.getElementById("result").innerHTML = "發現" + count + "個" + n;
+                }
+            }
+
+            document.getElementById("result").innerHTML = "1000萬以下的質數一共有" + count + "個。";
+
+        }
+
+
+        function cal() {
+            var a = document.getElementById("a");
+            var b = document.getElementById("b");
+            var c = document.getElementById("c");
+
+            c.value = eval(parseInt(a.value) + parseInt(b.value));
+        }
+
+    </script>
+</body>
+
+</html>

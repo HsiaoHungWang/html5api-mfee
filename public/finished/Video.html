@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>影片播放</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <h1>影片播放</h1>
+    <p>使用Vedio標籤播放影片</p>
+    <video id="video1" controls autoplay>
+        <source src="/videos/big_buck_bunny.mp4" type="video/mp4" />
+        <source src="/videos/big_buck_bunny.ogv" type="video/ogg" />
+        <track kind="subtitles" src="/videos/bunny_zhtw.vtt" srclang="zh-tw" label="繁體" />
+        <track kind="subtitles" src="/videos/bunny_en.vtt" srclang="en" label="English" />
+    </video>
+    <input type="button" value="擷取" id="button1">
+    <div id="div1"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+    <script>
+        var myDiv = document.querySelector("#div1"),
+            myVideo = document.querySelector("#video1");
+        document.querySelector("#button1").addEventListener("click", function () {
+            var canvas = document.createElement("canvas"),
+                context = canvas.getContext("2d");
+
+            canvas.setAttribute("width", "300");
+            canvas.setAttribute("height", "150");
+            context.drawImage(myVideo, 0, 0, 300, 150);
+
+            myDiv.appendChild(canvas);
+        })
+
+    </script>
+</body>
+
+</html>

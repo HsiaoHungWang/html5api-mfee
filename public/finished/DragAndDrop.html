@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+
+    <style>
+        .zone {
+            width: 600px;
+            height: 150px;
+            margin: 10px;
+            border: 1px solid green;
+        }
+
+        .item {
+            width: 80px;
+            height: 40px;
+            float: left;
+            background-color: gray;
+            margin: 5px;
+            text-align: center;
+        }
+
+        .over {
+            border: 3px red dashed;
+        }
+
+        a {
+            color: white
+        }
+
+        a:hover {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>DragAndDrop</h1>
+    <div id="zone1" class="zone">
+        <div id="d1" class="item">Item1</div>
+        <div id="d2" class="item">Item2</div>
+        <div id="d3" class="item">Item3</div>
+        <a id="a1" href="https://www.ispan.com.tw" class="item">iSpan</a>
+        <img src="/images/bunny.png" class="item" id="img1">
+    </div>
+    <div id="zone2" class="zone"></div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+    <script>
+        const divs = document.querySelectorAll('.item');
+        const zones = document.querySelectorAll('.zone');
+        for (var i = 0, max = divs.length; i < max; i++) {
+            divs[i].addEventListener("dragstart", dragstartHandler);
+        }
+
+        function dragstartHandler(event) {
+            console.log(event.target.id);
+            event.dataTransfer.setData('text/plain', event.target.id);
+        }
+
+        for (var i = 0, max = zones.length; i < max; i++) {
+
+            zones[i].addEventListener("dragenter", function (event) {
+                event.preventDefault();
+                this.classList.add('over');
+            })
+            zones[i].addEventListener("dragover", function (event) {
+                event.preventDefault();
+            })
+            zones[i].addEventListener("dragleave", function (event) {
+                event.preventDefault();
+                this.classList.remove('over');
+            })
+            zones[i].addEventListener("drop", dropHandler);
+        }
+        function dropHandler(event) {
+            const id = event.dataTransfer.getData("text/plain");
+            const source = document.querySelector("#" + id);
+            event.currentTarget.appendChild(source);
+            //event.currentTarget.appendChild(source.cloneNode(true));
+            this.classList.remove('over');
+        }
+
+
+    </script>
+</body>
+
+</html>

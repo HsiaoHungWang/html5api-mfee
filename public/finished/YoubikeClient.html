@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSE - 台北市YouBike即時資訊</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h1>YoubikeClient</h1>
+        <p>台北市Youbike：https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbike_immediate.json</p>
+        <p>高雄市Youbike：https://api.kcg.gov.tw/api/service/Get/b4dd9c40-9027-4125-8666-06bef1756092</p>
+        <div id="content"></div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-5">
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous">
+        </script>
+    <script>
+        const row = document.querySelector('.row');
+        let i = 0;
+        //todo1：建立EventSource物件，與 Server Sent Event Server ('/answers/youbikeserver')建立連線
+        const source = new EventSource("http://localhost:8080/youbike");
+
+
+        //todo2：接收Server傳回來的結果，要使用甚麼事件，將______換成適當的事件
+        source.addEventListener("message", event => {
+            const datas = JSON.parse(event.data);  //todo3：將______換成正確的取得資料的語法
+            const htmlYoubike = datas.map(data => {
+                return (`
+                     <div class="col">
+                        <div class="card h-100 text-bg-light">
+                            <div class="card-header">
+                                <h5>${data.sna}</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>總停車格：${data.total}</p>
+                                <p>目前車輛數量：${data.available_rent_bikes}</p>
+                                <p>空位數量：${data.available_return_bikes}</p>
+                                <p>住址：${data.sarea}${data.ar}</p>
+                            </div>
+                            <div class="card-footer">
+                                  <small>最後更新時間：${data.updateTime}</small>
+                            </div>
+                        </div>
+                    </div>
+                                `);
+            })
+
+            row.innerHTML = htmlYoubike;
+
+        });
+
+
+
+
+
+    </script>
+</body>
+
+</html>

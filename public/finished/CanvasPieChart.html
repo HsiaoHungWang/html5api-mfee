@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas 圓餅圖</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <style>
+        #myCanvas {
+            border: 1px solid green;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Canvas 圓餅圖</h1>
+    <canvas id="myCanvas" width="400" height="300"></canvas>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+    <script>
+        const canvas = document.querySelector('#myCanvas');
+        const context = canvas.getContext('2d');
+
+        const datas = [
+            { item: 'ItemA', value: 15, color: 'lightblue' },
+            { item: 'ItemB', value: 35, color: 'lightpink' },
+            { item: 'ItemC', value: 20, color: 'lightgreen' },
+            { item: 'ItemD', value: 30, color: 'lightgray' }];
+
+        const x = canvas.width / 2;
+        const y = canvas.height / 2;
+        const r = 100;
+        let startAngle = 0;
+
+        for (let i = 0, max = datas.length; i < max; i++) {
+            let endAngle = Math.PI * 2 * (datas[i].value / 100);
+            context.beginPath();
+            context.moveTo(x, y);
+            context.arc(x, y, r, startAngle, startAngle + endAngle);
+            context.closePath();
+            context.fillStyle = datas[i].color;
+            context.fill();
+
+            fx = x + r / 2 * (Math.cos(startAngle + endAngle / 2));
+            fy = y + r / 2 * (Math.sin(startAngle + endAngle / 2));
+            context.fillStyle = "black";
+            context.fillText(Math.round(100 * datas[i].value / 100) + '%', fx, fy);
+            startAngle += endAngle;
+        }
+
+    </script>
+</body>
+
+</html>

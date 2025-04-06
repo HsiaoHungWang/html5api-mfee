@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+    <h1>Notification</h1>
+    <button id="button1" class="btn btn-primary">桌面提醒功能</button>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+    <script>
+        document.querySelector("#button1").addEventListener("click", notifyMe);
+
+        async function notifyMe() {
+            const permission = await Notification.requestPermission();
+            if (permission === 'granted') {
+                console.log('允許通知');
+                showNotification();
+            } else if (permission === 'denied') {
+                console.log('拒絕通知');
+            } else {
+                console.log('未做出選擇');
+            }
+        }
+        let notifiction;
+        function showNotification() {
+            notifiction = new Notification("系統通知", {
+                body: "停機公告 13:00-14:00",
+                icon: "../images/notify.png"
+            })
+
+            notifiction.addEventListener("show", function () {
+                console.log("show");
+                window.setTimeout("notifiction.close()", 3000);
+            })
+            notifiction.addEventListener("close", function () {
+                console.log("close");
+            })
+            notifiction.addEventListener("click", function () {
+                console.log("click");
+            })
+        }
+
+    </script>
+</body>
+
+</html>

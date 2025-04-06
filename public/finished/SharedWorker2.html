@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SharedWorker2</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <h1>SharedWorker2</h1>
+    <input type="button" id="buttonSend" value="send">
+    <div id="div1"></div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+    <script>
+        const myDiv = document.querySelector('#div1');
+        document.querySelector("#buttonSend").addEventListener("click", function () {
+            //建立SharedWorker物件
+            var worker = new SharedWorker("../javascripts/SharedWorker.js");
+            //傳送資料給worker
+            worker.port.start();
+            worker.port.postMessage({ "name": "Tracy" });
+
+            //接收worker傳過來的資料
+
+            worker.port.onmessage = event => myDiv.innerHTML = event.data;
+
+        })
+    </script>
+</body>
+
+</html>
