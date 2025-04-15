@@ -33,8 +33,30 @@
         function fileInfo(theFile) {
             //theFile -> File物件
             //透過 console.log()，顯示檔案名稱、類型、大小及最後修改日期
+            console.log(`檔案名稱：${theFile.name}`)
+            console.log(`檔案類型：${theFile.type}`)
+            console.log(`檔案大小：${theFile.size}`)
+            console.log(`最後更新日期：${formatLastModified(theFile.lastModified)}`)
+            console.log(`最後更新日期：${theFile.lastModifiedDate}`)
 
         }
+
+        myFile.addEventListener('change', event=>{
+           const file = event.target.files[0]; //File Object
+           fileInfo(file);
+        })
+
+        //針對放下的區域實作兩個事件 dragover、drop
+        zone.addEventListener('dragover',event=>{
+            event.preventDefault();
+        })
+
+        zone.addEventListener('drop',event=>{
+            event.preventDefault();
+            event.stopPropagation();
+            //要取得拖曳進來的檔案
+            fileInfo(event.dataTransfer.files[0])
+        })
 
 
         //傳入毫秒，轉成 yyyy/mm/dd hh:mm:ss 回傳
