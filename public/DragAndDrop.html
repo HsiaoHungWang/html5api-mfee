@@ -42,9 +42,9 @@
 <body>
     <h1>DragAndDrop</h1>
     <div id="zone1" class="zone">
-        <div id="d1" class="item">Item1</div>
-        <div id="d2" class="item">Item2</div>
-        <div id="d3" class="item">Item3</div>
+        <div id="d1" class="item" draggable="true">Item1</div>
+        <div id="d2" class="item" draggable="true">Item2</div>
+        <div id="d3" class="item" draggable="true">Item3</div>
         <a id="a1" href="https://www.ispan.com.tw" class="item">iSpan</a>
         <img src="/images/bunny.png" class="item" id="img1">
     </div>
@@ -57,6 +57,54 @@
     <script>
         const divs = document.querySelectorAll('.item');
         const zones = document.querySelectorAll('.zone');
+
+        divs.forEach(item=>{
+            //元素被拖曳時會觸發dragstart事件
+            item.addEventListener('dragstart', dragStartHandler);
+        })
+
+        //把被拖曳元素的ID存到DataTransfer物件中
+        function dragStartHandler(event){
+          //console.log(event.target.id);
+          event.dataTransfer.setData('text/plain', event.target.id);
+        }
+
+        zones.forEach(zone=>{
+
+             //被拖曳元素碰到某個區域時會觸發 dragenter 事件
+             zone.addEventListener('dragenter',event=>{              
+                event.preventDefault();
+                event.target.classList.add('over');                
+            })
+            zone.addEventListener('dragleave',event=>{              
+                event.preventDefault();
+                event.target.classList.remove('over');                
+            })
+          
+            //被拖曳元素進入到某個區域時會觸發 dragover 事件
+            zone.addEventListener('dragover',event=>{              
+                event.preventDefault();                           
+            })
+            //被拖曳元素進入到某個區域時放開滑鼠，會觸發 drop 事件
+            zone.addEventListener('drop', dropHandler);
+        })
+
+        //從 DataTransfer 物件取出被拖曳元素的ID
+        function dropHandler(event){
+            event.preventDefault();
+            event.stopPropagation();
+
+            const id = event.dataTransfer.getData('text/plain')
+            
+            //透過ID取找到對應的元素
+            const sobj = document.querySelector(`#${id}`);
+            //console.log(sobj);
+
+            //event.target.appendChild(sobj);
+            event.target.appendChild(sobj.cloneNode(true));
+            event.target.classList.remove('over');    
+
+        }
 
 
 
