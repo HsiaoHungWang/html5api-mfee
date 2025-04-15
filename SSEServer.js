@@ -23,7 +23,7 @@ const server = http.createServer((req, res) => {
 
     const intervalId = setInterval(() => {
       const time = getFormattedTime();
-      res.write(`id: ${Date.now()} \n`);
+      // res.write(`id: ${Date.now()} \n`);
       res.write(`data: ${time}\n\n`);
     }, 1000);
 

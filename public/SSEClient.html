@@ -24,11 +24,23 @@
         const btnStart = document.querySelector('#button1');
         const btnStop = document.querySelector('#button2');
         let source;
+        //開始計時
         btnStart.addEventListener("click", event => {
+            const url = "http://localhost:8080/events"; //SSE Server URL
+           source =  new EventSource(url);
+           source.addEventListener('open',event=>{
+            console.log('連線成功')
+           })
+           //接收 SSE Server 傳回的資料
+           source.addEventListener('message', event =>{
+            //event.data 取得 data: 的資料
+            serverClock.innerHTML = event.data;   //data:16:15:30
+           })
 
         })
         btnStop.addEventListener('click', event => {
             if (source) {
+                source.close(); //停止連線到 SSE Server
 
             }
         })
