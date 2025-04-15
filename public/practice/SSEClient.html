@@ -4,39 +4,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canvas-長條圖</title>
+    <title>Server Sent Event</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-    <style>
-        #myCanvas {
-            border: 1px solid green;
-        }
-    </style>
+
 </head>
 
 <body>
-    <div class="container">
-    <h1>Canvas 長條圖</h1>
-    <canvas id="myCanvas" width="400" height="300"></canvas>
-</div>
+    <input type="button" id="button1" value="開始計時" class="btn btn-primary" />
+    <input type="button" id="button2" value="停止計時" class="btn btn-warning" />
+    <h1 id="clock">顯示伺服器端的時間</h1>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
         crossorigin="anonymous"></script>
     <script>
-        const datas = [90, 50, 170, 180, 50, 60];
+        const serverClock = document.querySelector('#clock');
+        const btnStart = document.querySelector('#button1');
+        const btnStop = document.querySelector('#button2');
+        let source;
+        btnStart.addEventListener("click", event => {
 
-        //建立繪圖物件
-        const canvas = document.querySelector('#myCanvas');
-        const context = canvas.getContext('2d');
-    
-        const w = 50;
-        const y = canvas.height; //300
-        let x  = 20;
-        context.fillStyle = "green";
-        datas.forEach(h => {
-            context.fillRect(x, y-h, w, h);
-            x = x + w + 10;
+        })
+        btnStop.addEventListener('click', event => {
+            if (source) {
+
+            }
         })
 
     </script>

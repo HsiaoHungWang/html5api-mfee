@@ -7,14 +7,84 @@
     <title>繪圖</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-
+    <style>
+        canvas{
+            border:1px solid green;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Canvas</h1>
+    <div class="container">
+         <h1>Canvas</h1>
+        <canvas id="myCanvas" width="400" height="300"></canvas>
+    </div>
+   
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
         crossorigin="anonymous"></script>
+    <script>
+        const canvas = document.querySelector('#myCanvas');
+        //產生繪圖物件Rendering Context Object 
+        const context = canvas.getContext('2d');
+        
+        //設定樣式
+        context.fillStyle = 'lightgreen';
+        context.strokeStyle = 'red';
+        context.lineWidth = 3;
+
+        //矩形
+        // context.fillRect(100, 50 ,200 ,90);
+        // context.strokeRect(100, 160, 200, 90);
+        // context.clearRect(150, 70, 100, 50);
+
+        //畫線
+        // context.beginPath();
+        // context.moveTo(50,50);
+        // context.lineTo(50,100);
+        // context.lineTo(150, 200);
+        // context.closePath();
+        // context.stroke();
+
+        //畫弧跟圓
+        const x = canvas.width / 2;
+        const y = canvas.height / 2;
+        // const r = 100;
+        // context.moveTo(x, y);
+        //弧
+        // context.arc(x,y,r, Math.PI * 1, Math.PI * 0.5, false);
+        // context.closePath();
+        // context.stroke();
+
+        //圓
+        // context.arc(x, y, r, Math.PI * 0, Math.PI * 2, true);
+        // context.fill();
+
+        //圖
+        const img = new Image();
+        // img.src = '/images/cars.jpg';
+        // //圖載入後會觸發load事件
+        // img.addEventListener('load',()=>{
+        //     //將原尺寸的圖繪製到Canvas中
+        //     context.drawImage(img, 0, 0)
+        //     //將原圖縮小後繪製到Canvas中
+        //     context.drawImage(img, 0, 0, 200, 150)
+        //     //將原圖裁切後，繪製到Canvas上
+        //     context.drawImage(img, 180,80,200,200, 0,0,100,100)
+
+        // })
+
+        //字
+        context.font = '48px arial';
+        context.textAlign = "center";
+        context.strokeText('Hello Canvas!!',x, y);
+        //context.fillText('Hello Canvas!!',x, y);
+
+
+
+    </script>
 
 </body>
 

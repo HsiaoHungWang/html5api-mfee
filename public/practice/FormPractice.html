@@ -18,7 +18,7 @@
             <form id="registerForm">
                 <div class="mb-3">
                     <label for="account" class="form-label">帳號</label>
-                    <input type="text" class="form-control" id="account" required autocomplete="off" autofocus>
+                    <input type="text" class="form-control" id="account">
                     <!--
                       1.網頁載入時將游標停駐在帳號的文字輸入方塊中
                       2.取消瀏覽器會自動記錄輸入資料的功能
@@ -35,17 +35,17 @@
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">電子郵件</label>
-                    <input type="email" class="form-control" id="email">
-                    <!--1.請填入正確type的屬性值. 2.確定符合正確的電子郵件格式 aaa@com -->
+                    <input type="" class="form-control" id="email">
+                    <!--1.請填入正確type的屬性值. 2.確定符合正確的電子郵件格式-->
                 </div>
                 <div class="mb-3">
                     <label for="blog" class="form-label">部落格</label>
-                    <input type="url" class="form-control" id="blog">
-                    <!--1.請填入正確type的屬性值. 2.確定符合正確的網址格式 -->
+                    <input type="" class="form-control" id="blog">
+                    <!--1.請填入正確type的屬性值. 2.確定符合正確的網址格式-->
                 </div>
                 <div class="mb-3">
                     <label for="phone" class="form-label">連絡電話</label>
-                    <input type="tel" placeholder="0911-111-111" class="form-control" id="phone" pattern="09\d{2}-\d{3}-\d{3}">
+                    <input type="" class="form-control" id="phone">
                     <!--
                       1.請填入正確的type.
                       2.提示使用者輸入正確的手機格式(0911-111-111)
@@ -54,7 +54,7 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="age">年紀</label>
-                    <input type="number" class="form-control" id="age" min="10" max="100" value="20" step="2">
+                    <input type="" class="form-control" id="age">
                     <!--1.請填入正確的type. 2.最小值10 3.最大值100 4.預設值20-->
                 </div>
                 <button type="submit" class="btn btn-primary">送出</button>
@@ -66,32 +66,7 @@
         integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
         crossorigin="anonymous"></script>
     <script>
-    document.querySelector('#account').addEventListener('blur',function(){
 
-        //取得驗證狀態
-        console.log(this.validity);
-        if(this.validity.valueMissing){
-        //改變預設的錯誤訊息
-          this.setCustomValidity('帳號一定要輸入');
-        }else{                    
-         this.setCustomValidity('');
-        }
-
-       
-    })
-    
-    
-    const pwd1 = document.querySelector('#pwd1');
-    const pwd2 = document.querySelector('#pwd2');
-    pwd2.addEventListener('blur', evt => {
-        if(pwd1.value !== pwd2.value){
-           
-            evt.target.setCustomValidity('密碼不一致');
-        }else{
-            evt.target.setCustomValidity('');
-        }
-    })
-    
     </script>
 </body>
 

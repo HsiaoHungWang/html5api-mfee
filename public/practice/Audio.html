@@ -12,11 +12,6 @@
 
 <body>
     <h1>Audio API</h1>
-    <audio controls preload="auto" autoplay>
-        <source src="/musics/十年.mp3"  />
-        <!-- <source src="/musics/十年.wav"  />
-        <source src="/musics/十年.ogg"  /> -->
-    </audio>
     <hr />
     <p>歌曲撥放清單</p>
     <ul id="playlist" class="list-group"></ul>
@@ -24,7 +19,7 @@
     <input type="button" value="play" id="buttonPause" />
     <input type="button" value="<" id="buttonPrev" title="上一首" />
     <input type="button" value=">" id="buttonNext" title="下一首" />
-    <input type="range" id="volume" min="0" max="10" value="5" step="1">
+    <input type="range" id="volume" min="0" max="10" value="1" step="1">
     <hr />
     <span id="playSong"></span>
     <span id="info"></span>
@@ -53,7 +48,7 @@
         ul.innerHTML = liMusics.join("");
 
         //todo 建立Audio物件
-        const audio = new Audio();
+        const audio = _____________;
 
         //播放初始音量
         //將撥放音量設定成0.5
@@ -72,24 +67,22 @@
             const playingFile = musics[idx];
             //將其音樂檔案的位置設定給audio物件
             audio.setAttribute('src', playingFile.url);
-            //todo 使用甚麼方法撥放歌曲 play()
-            audio.play();
+            //todo 使用甚麼方法撥放歌曲
+            audio.__________;
             //將撥放的音樂名稱顯示在id為playSong的span標籤中
             spanPlay.innerHTML = `現在播放：${playingFile.name}`;
         }
 
         //todo 在甚麼事件中顯示撥放進度     
-        audio.addEventListener("timeupdate", () => {
-            // console.log(audio.duration); //整首個的長度
-            // console.log(audio.currentTime); //目前播放的進度
+        audio.addEventListener("_____________", () => {
             //將撥放的音樂的進度顯示在id為info的span標籤中  目前播放進度/整首歌的播放長度
             //todo 用甚麼屬性取得播放進度，用甚麼屬性取得整首歌的長度
-            spanInfo.innerHTML = `${formatTime(audio.currentTime)}/${formatTime(audio.duration)}`;
+            spanInfo.innerHTML = `${formatTime(audio.___________)}/${formatTime(audio._____________)}`;
         }, false);
 
         //一首歌曲撥放完後，自動撥放下一首歌
         //todo 甚麼事件表示歌曲播放完成
-        audio.addEventListener("ended", next);
+        audio.addEventListener("________", next);
 
 
         //下一首歌
@@ -135,7 +128,7 @@
 
         //設定音量的大小 parseFloat(this.value / 10)
         //todo 用甚麼屬性控制音量
-        volume.addEventListener("change", event => audio.volume = parseFloat(event.target.value / 10));
+        volume.addEventListener("change", event => audio._________ = parseFloat(event.target.value / 10));
 
         //格式化時間 mm:ss
         function formatTime(seconds) {

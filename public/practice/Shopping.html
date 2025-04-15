@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DnD - 購物車</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <style>
+        /* 設置左右區塊的背景色 */
+        .left-section {
+            background-color: #f8f9fa;
+        }
+
+        .right-section {
+            background-color: #e9ecef;
+        }
+
+
+        /* 使用 Flexbox 佈局 */
+        .container-fluid>.row {
+            display: flex;
+            /*   flex-direction: column;將row設置為垂直佈局 */
+            height: 100vh;
+            /* 設置容器高度為視窗的最大高度 */
+        }
+
+        .flex-grow-1 {
+            flex-grow: 1;
+            /* 讓.flex-grow-1自動填滿剩餘空間 */
+        }
+
+        /*產品樣式*/
+        p {
+            margin: 0;
+        }
+
+        #products {
+            /* float: left; */
+            list-style: none;
+            /*  width: 60%; */
+            padding: 0;
+        }
+
+        #products li {
+            display: inline;
+        }
+
+        .item {
+            display: block;
+            float: left;
+            width: 180px;
+            height: 180px;
+            margin: 10px;
+            border: 1px solid #494949;
+            text-align: center;
+            text-decoration: none;
+            color: #000;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .item img {
+            border: 0;
+            margin: 10px auto;
+            width: 160px;
+            height: 160px;
+        }
+
+        .item div {
+            background: rgb(0, 0, 0);
+            background: rgba(0, 0, 0, 0.5);
+            position: relative;
+            bottom: 60px;
+            color: #f3f3f3;
+            padding: 5px 0;
+            /*    display: none; */
+        }
+
+        /*購物車樣式*/
+        /*     #cart {
+                        float: right;
+                        background-color: #ccc;
+                        width: 25%;
+                        padding: 0 5%;
+                        height: 100%;
+                    } */
+
+        #cart ul {
+            padding: 0;
+        }
+
+        #cart li {
+            list-style: none;
+            border-bottom: 1px solid #494949;
+            padding: 5px;
+        }
+
+        #cart .quantity {
+            font-weight: bold;
+            padding-right: 10px;
+            margin-right: 10px;
+            border-right: 1px solid #494949;
+            display: inline-block;
+            width: 15px;
+            text-align: right;
+        }
+
+        #cart .price {
+            float: right;
+        }
+
+        #total {
+            float: right;
+        }
+
+        #cart small {
+            /*  position: absolute;
+                        bottom: 20px; */
+            color: #fff;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
+            /*display:none;*/
+        }
+
+        .table {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Shopping</h1>
+    <!--找到有todo的地方，根據說明提示修改程式碼，才能完成透過拖曳，完成購物車的功能-->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-9 d-flex flex-column left-section">
+                <div class="flex-grow-1">
+                    <!--顯示商品資料-->
+                    <ul id="products"></ul>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex flex-column right-section" id="cart">
+                <div class="flex-grow-1">
+                    <div>
+                        <h2>購物車</h2>
+                        <small>產品拖曳到此區域，放開後加入購物車</small>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>產品編號</th>
+                                    <th>數量</th>
+                                    <th>價格</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2" style="text-align:right">總計：</td>
+                                    <td>0</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+    <script>
+        const cart = document.querySelector('#cart'); //放下區域
+        const myCart = document.querySelector('.table>tbody');
+        const eleProducts = document.querySelector('#products'); //商品
+
+        const products = [{ "ProductID": 1, "ModelNumber": "D434AB8A", "ModelName": "Acer 宏碁 Aspire 17.3吋", "UnitCost": 13999, "ProductImage": "D434AB8A2A.jpg" },
+        { "ProductID": 2, "ModelNumber": "A940B2C4", "ModelName": "ASUS E210MA 11.6吋", "UnitCost": 7111, "ProductImage": "940B2C4579.jpg" },
+        { "ProductID": 3, "ModelNumber": "A370262e", "ModelName": "Acer 宏碁 15.6吋獨顯", "UnitCost": 22900, "ProductImage": "370262e477.jpg" },
+        { "ProductID": 4, "ModelNumber": "M3c2ae86", "ModelName": "華為 MateBook X Pro", "UnitCost": 23900, "ProductImage": "3c2ae86608.jpg" },
+        { "ProductID": 5, "ModelNumber": "DB44A7D0", "ModelName": "HP 超品 14吋效能輕薄筆電", "UnitCost": 18900, "ProductImage": "DB44A7D0D6.jpg" },
+        { "ProductID": 6, "ModelNumber": "S99373D8", "ModelName": "Surface 13.5吋觸控輕薄筆電", "UnitCost": 18588, "ProductImage": "799373D803.jpg" },
+        { "ProductID": 7, "ModelNumber": "A399D701", "ModelName": "Lenovo ThinkPad 商務筆電", "UnitCost": 39900, "ProductImage": "A399D70127.jpg" },
+        { "ProductID": 8, "ModelNumber": "AD71D7D1", "ModelName": "MSI微星 Sword 電競筆電", "UnitCost": 26900, "ProductImage": "AD71D7D1F1.jpg" },
+        { "ProductID": 9, "ModelNumber": "D6C504BB", "ModelName": "DELL戴爾 Gaming 電競筆電", "UnitCost": 42999, "ProductImage": "46C504BBD8.jpg" },
+        { "ProductID": 10, "ModelNumber": "ADE78B08", "ModelName": "Acer 宏碁 Nitro5 獨顯電競筆電", "UnitCost": 31900, "ProductImage": "1DE78B08E4.jpg" },
+        { "ProductID": 11, "ModelNumber": "E549D6B6", "ModelName": "Lenovo LOQ 15吋電競筆電", "UnitCost": 28900, "ProductImage": "E549D6B6D2.jpg" },
+        { "ProductID": 12, "ModelNumber": "A79E54F3", "ModelName": "ASUS G814JV 2K電競筆電", "UnitCost": 59999, "ProductImage": "579E54F3DD.jpg" }];
+
+        //載入產品資料
+        const liItems = products.map(product => {
+            const { ModelNumber, ModelName, UnitCost, ProductImage } = product;
+            return (`
+                                   <li>
+                                           <!--todo 要讓下面的 div 可以被拖曳，要加上什麼屬性，及加上甚麼事件，事件發生後要呼叫的function名稱，請使用dragstartHandler(event)-->
+                                       <div id="${ModelNumber}" _______________ class="item" _____________="dragstartHandler(event)">
+                                           <img src="/ProductImages/${ProductImage}" />
+                                           <div>
+                                                <small>${ModelName}</small><br/>
+                                                <small><span>價格：</span><span>${commafy(UnitCost)}</span></small>
+                                           </div>
+                                        </div>
+                                    </li>
+                                `);
+        });
+        eleProducts.innerHTML = liItems.join("");
+
+        //被拖曳的元素需要有draggable="true"的設定，檢查看看每個商品是否有此屬性
+        //對於每個商品設定dragstart事件，並將其id儲存在dataTransfer中
+        const dragstartHandler = evt => {
+            let id = evt.target.id;
+            // 檢查目標元素是否是img元素
+            if (evt.target.tagName.toLowerCase() === 'img') {
+                // 如果是img元素，訪問其父元素（上層的div）
+                var parentDiv = evt.target.parentNode;
+                // 在這裡可以對父元素進行操作
+                id = parentDiv.id;
+            }
+            //todo id 是被拖曳商品的商品編號，要透過甚麼方式才能在放下事件發生取出此商品編號(id)來用
+
+        }
+
+        //將數字轉成千分位
+        function commafy(num) {
+            num = num + "";
+            var re = /(-?\d+)(\d{3})/
+            while (re.test(num)) {
+                num = num.replace(re, "$1,$2")
+            }
+            return num;
+        }
+        //解除千分位 value.replace(/[,]+/g,"");
+
+        //to do 對於cart的ul元素設定dragover事件
+        //在dragover事件中，使用preventDefault()防止預設動作發生
+
+
+        //todo 對於cart的ul元素設定drop事件
+        //在drop事件中，呼叫toBuy function
+
+
+        function toBuy(event) {
+            //todo 使用preventDefault()防止預設動作發生
+
+
+            //todo 使用stopPropagation()防止事件氣泡現象
+
+            //todo 從dataTransfer物件中取出(getData)之前存進去的產品Id
+            //將產品Id存放到id變數中
+            const id = _____________________;
+
+            //判斷購物車是否已購買此項產品
+            noCartItem(id);
+        }
+
+        //加入購物車
+        function addToCart(id) {
+            //顯示表格
+            myCart.parentNode.style.display = "block";
+
+            //根據商品編號找到商品
+            const item = document.querySelector(`#${id}`);
+            //讀取商品價格
+            let itemPrice = item.querySelector('small:nth-child(3)>span:nth-child(2)').textContent;
+            itemPrice = itemPrice.replace(/[,]+/g, "");
+            //將商品編號、數量(預設1)、價格加入到購物車
+            const trItem = `<tr><td>${id}</td><td>1</td><td>${itemPrice}</td></tr>`;
+            myCart.insertAdjacentHTML('beforebegin', trItem);
+
+            //計算購物車總價
+            total();
+
+        }
+
+        //修改購買數量
+        function updateCart(item) {
+            //更新購買數量            
+            item.childNodes[1].textContent = parseInt(item.childNodes[1].textContent) + 1;
+
+            //重新計算
+            total();
+        }
+
+        //判斷購物車是否有此項產品
+        function noCartItem(id) {
+
+            const rows = document.querySelectorAll('.table>tbody tr');
+            let flag = true;
+            rows.forEach(row => {
+                let pid = row.childNodes[0].textContent;
+                if (pid === id) {
+                    updateCart(row);
+                    flag = false;
+                }
+            })
+            if (flag) {
+                addToCart(id);
+            }
+
+        }
+
+        //計算購物車購買總價
+        function total() {
+            const rows = document.querySelectorAll('.table>tbody tr');
+            let total = 0;
+            rows.forEach(row => {
+                let price = row.childNodes[2].textContent;
+
+                //price = price.replace(/[,]+/g, "")
+                let qty = row.childNodes[1].textContent;
+                total += price * qty;
+            })
+
+            const tfoot = document.querySelectorAll('.table>tfoot>tr>td');
+            tfoot[1].textContent = `NT$ ${commafy(total)}`;
+
+        }
+
+    </script>
+</body>
+
+</html>
