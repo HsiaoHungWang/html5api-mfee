@@ -10,7 +10,7 @@
     <style>
         .zone {
             width: 600px;
-            height: 100px;
+            height: 300px;
             border: 1px solid green;
             overflow-y: auto;
         }
@@ -24,12 +24,12 @@
 </head>
 
 <body>
-
+<div class="container">
     <h1>FileReader 讀取圖片</h1>
     <input id="file1" type="file" multiple accept="image/*" />
     <div class="zone">
     </div>
-
+</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
         crossorigin="anonymous"></script>
@@ -38,16 +38,28 @@
         const zone = document.querySelector(".zone");
 
         myFile.addEventListener("change", event => {
-
+            Array.from(event.target.files).forEach(file => {
+                fileViewer(file);
+            });
         });
         function fileViewer(theFile) {
+          
             //透過FileReader物件中readAsDataURL()讀取theFile的圖
-
+            const reader = new FileReader();
+            reader.readAsDataURL(theFile);
+            reader.addEventListener('load', event => {                
+                const eleImg = `<img src="${event.target.result}" class="thumb" />`;
+                zone.insertAdjacentHTML('afterbegin', eleImg);
+            })
         }
 
         zone.addEventListener("dragover", event => event.preventDefault());
         zone.addEventListener("drop", event => {
             event.preventDefault();
+            
+            Array.from(event.dataTransfer.files).forEach(file => {
+                fileViewer(file);
+            });
 
         })
     </script>
