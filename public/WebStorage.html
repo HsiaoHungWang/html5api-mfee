@@ -33,16 +33,32 @@
 
         btnSave.addEventListener("click", () => {
             //資料寫入localStorage中
+            localStorage.setItem('name', txtLocal.value);
 
             //資料寫入sessionStorage中
+            sessionStorage.setItem('name', txtSession.value);
 
         })
 
         btnGet.addEventListener("click", () => {
             //讀出localStorage與sessionStorage中的資料，顯示在div中
+            const tLocal = localStorage.getItem('name');
+            // const tSession = sessionStorage.getItem('name');
 
-            //let str = "";
+            // myDiv.innerHTML = `<p>localStorage：${tLocal}</p><p>sessionStorage：${tSession}</p>`;
+
+            let str = "";
             //讀取多筆資料
+
+            for(let i=0, max=localStorage.length;i<max;i++){
+                const k = localStorage.key(i);  //回傳key name                
+                str += `<p>${k}：${localStorage.getItem(k)}</p>`
+
+            }
+
+            myDiv.innerHTML = str;
+
+
 
         })
 
