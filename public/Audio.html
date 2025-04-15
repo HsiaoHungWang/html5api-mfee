@@ -7,10 +7,15 @@
     <title>音樂播放</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-
+<style>
+    #myCanvas{
+        border:1px solid green;
+    }
+</style>
 </head>
 
 <body>
+    <div class="container">
     <h1>Audio API</h1>
     <audio controls preload="auto" autoplay>
         <source src="/musics/十年.mp3"  />
@@ -28,8 +33,8 @@
     <hr />
     <span id="playSong"></span>
     <span id="info"></span>
-
-
+    <canvas id="myCanvas" width="300" height="20"></canvas>
+</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
         crossorigin="anonymous"></script>
@@ -51,6 +56,19 @@
         //建立播放清單
         const liMusics = musics.map((item, index) => `<li onclick="playsong('${index}')" class="list-group-item w-25">${item.name}</li>`);
         ul.innerHTML = liMusics.join("");
+
+        //建立繪圖物件
+        const canvas = document.querySelector('#myCanvas');
+        const context = canvas.getContext('2d');
+        context.fillStyle = 'green';
+        
+        canvas.addEventListener('click',event=>{
+            // console.log(event.offsetX);
+            const t = (event.offsetX/canvas.width) * audio.duration;
+            audio.currentTime = t;
+        })
+
+
 
         //todo 建立Audio物件
         const audio = new Audio();
@@ -85,6 +103,11 @@
             //將撥放的音樂的進度顯示在id為info的span標籤中  目前播放進度/整首歌的播放長度
             //todo 用甚麼屬性取得播放進度，用甚麼屬性取得整首歌的長度
             spanInfo.innerHTML = `${formatTime(audio.currentTime)}/${formatTime(audio.duration)}`;
+
+            //todo 利用 Canvas 畫出目前的撥放進度
+            context.clearRect(0,0,canvas.width,canvas.height);
+            const w = (audio.currentTime/audio.duration) * canvas.width;
+            context.fillRect(0,0,w,canvas.height);
         }, false);
 
         //一首歌曲撥放完後，自動撥放下一首歌
