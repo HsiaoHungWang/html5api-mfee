@@ -110,12 +110,15 @@
                     var y = Math.floor(Math.random() * canvas.height); //設定繪製圖型位置的y座標
 
                     //todo 將選取的圖,放大縮小後繪到canvas中 drawImage()
-
+                    context.drawImage(imageObj,x,y,w,w);
                 }
             }
 
             //這是不正確的寫法
             imageObj.src = `/images/${this.files[0].name}`;  //會到Server端去下載圖片
+           
+           
+           
             //要改用FileReader物件去讀取使用者選到自己電腦中的圖
 
         })
