@@ -27,6 +27,7 @@
 <div class="container">
     <h1>FileReader 讀取圖片</h1>
     <input id="file1" type="file" multiple accept="image/*" />
+    <input type="button" value="檔案上傳" id="button1">
     <div class="zone">
     </div>
 </div>
@@ -36,9 +37,13 @@
     <script>
         const myFile = document.querySelector("#file1");
         const zone = document.querySelector(".zone");
+        const uploadFiles = [];
+        const btn = document.querySelector('#button1');
+
 
         myFile.addEventListener("change", event => {
             Array.from(event.target.files).forEach(file => {
+                uploadFiles.push(file);
                 fileViewer(file);
             });
         });
@@ -55,12 +60,26 @@
 
         zone.addEventListener("dragover", event => event.preventDefault());
         zone.addEventListener("drop", event => {
-            event.preventDefault();
-            
+            event.preventDefault();            
             Array.from(event.dataTransfer.files).forEach(file => {
+                uploadFiles.push(file);
                 fileViewer(file);
             });
 
+        })
+
+        //todo 要能刪除預覽圖片
+        //todo 把圖片上傳到Server上
+        btn.addEventListener('click', ()=>{
+            console.log(uploadFiles.length);
+            //檔案上傳，把 uploadFiles 裡面的資料讀出來上傳
+            // uploadFiles.forEach(file=>{
+            //     fetch('api_url',{
+            //         method:'POST',
+            //         body:formData
+            //    })
+            // })
+          
         })
     </script>
 </body>
