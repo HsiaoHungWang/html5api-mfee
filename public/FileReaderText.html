@@ -7,14 +7,22 @@
     <title>FileReader Text</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-
+        <style>
+            .zone {
+                width: 100%;
+                height: 200px;
+                border: 1px solid green;
+            }
+        </style>
 </head>
 
 <body>
+    <div class="container">
     <h1>FileReader 讀取文字</h1>
     <input id="file1" type="file" />
     <div class="zone">
     </div>
+</div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
@@ -23,6 +31,7 @@
     <script>
         const zone = document.querySelector('.zone');
         const myFile = document.querySelector("#file1");
+
         myFile.addEventListener("change", event => {
             fileViewer(event.target.files[0]);
         });
@@ -30,6 +39,11 @@
 
         function fileViewer(theFile) {
             //透過FileReader物件中readAsText()讀取theFile的文字內容
+            const reader = new FileReader();
+            reader.readAsText(theFile, 'utf-8');
+            reader.addEventListener('load', event =>{
+                zone.textContent = event.target.result;
+            })
 
         }
 
