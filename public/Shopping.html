@@ -198,7 +198,7 @@
             return (`
                                    <li>
                                            <!--todo 要讓下面的 div 可以被拖曳，要加上什麼屬性，及加上甚麼事件，事件發生後要呼叫的function名稱，請使用dragstartHandler(event)-->
-                                       <div id="${ModelNumber}" _______________ class="item" _____________="dragstartHandler(event)">
+                                       <div id="${ModelNumber}" draggable="true" class="item" ondragstart="dragstartHandler(event)">
                                            <img src="/ProductImages/${ProductImage}" />
                                            <div>
                                                 <small>${ModelName}</small><br/>
@@ -222,7 +222,8 @@
                 id = parentDiv.id;
             }
             //todo id 是被拖曳商品的商品編號，要透過甚麼方式才能在放下事件發生取出此商品編號(id)來用
-
+            evt.dataTransfer.setData('text/plain',id)
+           
         }
 
         //將數字轉成千分位
@@ -238,21 +239,26 @@
 
         //to do 對於cart的ul元素設定dragover事件
         //在dragover事件中，使用preventDefault()防止預設動作發生
+        cart.addEventListener('dragover',event=>{
+            event.preventDefault();
+        })
 
 
         //todo 對於cart的ul元素設定drop事件
         //在drop事件中，呼叫toBuy function
+        cart.addEventListener('drop',toBuy);
 
 
         function toBuy(event) {
             //todo 使用preventDefault()防止預設動作發生
-
+            event.preventDefault();
 
             //todo 使用stopPropagation()防止事件氣泡現象
+            event.stopPropagation();
 
             //todo 從dataTransfer物件中取出(getData)之前存進去的產品Id
             //將產品Id存放到id變數中
-            const id = _____________________;
+            const id = event.dataTransfer.getData('text/plain');
 
             //判斷購物車是否已購買此項產品
             noCartItem(id);
