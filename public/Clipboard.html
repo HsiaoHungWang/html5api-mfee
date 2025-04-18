@@ -51,9 +51,16 @@
         const btnPaste = document.querySelector('#paste');
 
         //todo 寫個 copy function 透過 Clipboard API 進行複製
+        const copy = async ()=>{
+             const copyText = document.querySelector('#codeCopy').textContent;
+             await navigator.clipboard.writeText(copyText);
+        }
 
         //todo 寫個 paste function 透過 Clipboard API 完成貼上
-
+        const paste = async ()=>{
+            const pasteText = await navigator.clipboard.readText();
+            document.querySelector('#codePaste').textContent = pasteText;
+        }
 
         btnCopy.addEventListener('click', copy);
         btnPaste.addEventListener('click', paste);
