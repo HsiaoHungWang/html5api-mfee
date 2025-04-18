@@ -27,10 +27,14 @@
         integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
         crossorigin="anonymous"></script>
     <script>
+        const div1 = document.getElementById("result");
         function sosucal1() {
-            //呼叫 Web Worker /javascripts/sosu-worker.js
-
-
+            //呼叫 Web Worker /javascripts/sosu-worker1.js
+           const worker = new Worker('/javascripts/sosu-worker1.js');
+           worker.addEventListener('message', event=>{
+            div1.textContent = event.data;
+           })
+    
         }
 
         function sosucal() {
