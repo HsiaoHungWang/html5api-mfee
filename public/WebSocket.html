@@ -23,7 +23,25 @@
         const myDiv = document.querySelector('#div1');
 
 
+        //建立WebSocket物件
+        const socket = new WebSocket(host); //有成功連線到WebSocket Server，就會建立WebSocket物件
 
+        //連線成功會觸發open事件
+        socket.addEventListener('open',event=>{
+            console.log('連線成功')
+            //傳送資料給 socket server
+            socket.send("Hello From 高雄!!");
+        })
+        //WebSocket有傳送資料過來，會觸發message事件
+        socket.addEventListener('message',event=>{
+            //event.data 會得到socket server傳過來的資料
+            console.log(event.data);
+            // socket.close();
+        })
+        socket.addEventListener('close',event=>{
+            console.log('連線關閉')
+           
+        })
     </script>
 </body>
 
