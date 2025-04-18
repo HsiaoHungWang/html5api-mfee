@@ -66,105 +66,106 @@
         crossorigin="anonymous"></script>
     <script>
        //建立WebSocket物件
-        const socket = new WebSocket('ws://localhost:8080');
-        socket.addEventListener('open',()=>{
-            console.log('連線建立成功')
-            socket.send('{"name":"Tom","message":"Hello All!!"}');
-        })
-        socket.addEventListener('message',event=>{
-            const data = JSON.parse(event.data)
-            console.log(data.name);
-            console.log(data.text);
-            console.log(formatTime(new Date(data.time)));
-        })
-
-
-        // const btnToggle = document.querySelector('#buttonToggle');
-        // const txtName = document.querySelector('#userName');
-        // const messageBody = document.querySelector('.card-body');
-        // const btnSend = document.querySelector('#buttonSend');
-        // const inpMessage = document.querySelector('#message');
-        // let socket;
-        // let theName = "";
-        // const wsUrl = 'ws://localhost:8080';
-
-        // //加入聊天室
-        // btnToggle.addEventListener('click', event => {
-        //     theName = txtName.value ? txtName.value : "Guest";
-
-        //     if (event.target.value === "加入") {
-        //         event.target.value = "離開";
-        //         //todo 建立WebSocket物件
-
-
-        //         //todo 接收WebSocket傳送過來的資料事件
-        //         socket._____________ = (event) => {
-        //             showMessage(JSON.parse(____________));
-        //         };
-        //         //todo 連線建立成功事件
-        //         socket.______________ = (event) => {
-        //             const datas = { "name": theName };
-        //             //todo 將訊息傳遞給 WebSocket Server
-
-        //         };
-        //         //todo 關閉WebSocket連線事件
-        //         socket______________ = (event) => {
-        //             console.log(event);
-        //         };
-
-        //         //todo WebSocket連線發生錯誤事件
-        //         socket.______________ = (error) => {
-        //             console.error(error);
-        //         };
-        //     } else {
-        //         event.target.value = "加入";
-        //         //todo 關閉WebSocket連線
-        //         socket.__________;
-        //     }
+        // const socket = new WebSocket('ws://localhost:8080');
+        // socket.addEventListener('open',()=>{
+        //     console.log('連線建立成功')
+        //     socket.send('{"name":"Tom","message":"Hello All!!"}');
+        // })
+        // socket.addEventListener('message',event=>{
+        //     const data = JSON.parse(event.data)
+        //     console.log(data.name);
+        //     console.log(data.text);
+        //     console.log(formatTime(new Date(data.time)));
         // })
 
-        // //傳送訊息到聊天室
-        // btnSend.addEventListener('click', () => {
-        //     const data = {
-        //         messageContent: inpMessage.value
-        //     }
-        //     //todo 將訊息傳遞給 WebSocket Server
 
-        //     inpMessage.value = "";
-        // })
+        const btnToggle = document.querySelector('#buttonToggle');
+        const txtName = document.querySelector('#userName');
+        const messageBody = document.querySelector('.card-body');
+        const btnSend = document.querySelector('#buttonSend');
+        const inpMessage = document.querySelector('#message');
+        let socket;
+        let theName = "";
+        const wsUrl = 'ws://localhost:8080';
 
-        // //顯示聊天室的訊息
-        // function showMessage(data) {
-        //     console.log(data);
-        //     let div1 = '';
+        //加入聊天室
+        btnToggle.addEventListener('click', event => {
+            theName = txtName.value ? txtName.value : "Guest";
 
-        //     let htmlMessage = `
-        //                     <div class="d-flex flex-row justify-content-start">
-        //                         <span>${data.name}</span>
-        //                         <div>
-        //                             <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">${data.text}</p>
-        //                             <p class="small ms-3 mb-3 rounded-3 text-muted">${formatTime(new Date(data.time))}</p>
-        //                         </div>
-        //                     </div>
+            if (event.target.value === "加入") {
+                event.target.value = "離開";
+                //todo 建立WebSocket物件
+                socket = new WebSocket(wsUrl);
 
-        //                         `
+                //todo 接收WebSocket傳送過來的資料事件
+                socket.onmessage = (event) => {
+                    showMessage(JSON.parse(event.data));
+                };
+                //todo 連線建立成功事件
+                socket.onopen = (event) => {
+                    const datas = { "name": theName };
+                    //todo 將訊息傳遞給 WebSocket Server
+                    socket.send(JSON.stringify(datas));
 
-        //     if (data.name === txtName.value) {
-        //         htmlMessage = `
-        //                       <div class="d-flex flex-row justify-content-end mb-4">
-        //                         <div>
-        //                             <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">${data.text}</p>
-        //                              <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">${formatTime(new Date(data.time))}</p>
+                };
+                //todo 關閉WebSocket連線事件
+                socket.onclose = (event) => {
+                    console.log(event);
+                };
+
+                //todo WebSocket連線發生錯誤事件
+                socket.onerror = (error) => {
+                    console.error(error);
+                };
+            } else {
+                event.target.value = "加入";
+                //todo 關閉WebSocket連線
+                socket.close();
+            }
+        })
+
+        //傳送訊息到聊天室
+        btnSend.addEventListener('click', () => {
+            const data = {
+                message: inpMessage.value
+            }
+            //todo 將訊息傳遞給 WebSocket Server
+            socket.send(JSON.stringify(data));  
+            inpMessage.value = "";
+        })
+
+        //顯示聊天室的訊息
+        function showMessage(data) {
+            //console.log(data);
+            let div1 = '';
+
+            let htmlMessage = `
+                            <div class="d-flex flex-row justify-content-start">
+                                <span>${data.name}</span>
+                                <div>
+                                    <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">${data.text}</p>
+                                    <p class="small ms-3 mb-3 rounded-3 text-muted">${formatTime(new Date(data.time))}</p>
+                                </div>
+                            </div>
+
+                                `
+
+            if (data.name === txtName.value) {
+                htmlMessage = `
+                              <div class="d-flex flex-row justify-content-end mb-4">
+                                <div>
+                                    <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">${data.text}</p>
+                                     <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">${formatTime(new Date(data.time))}</p>
                          
-        //                                   </div>
-        //                         <span>${data.name}</span>
-        //                     </div>
+                                          </div>
+                                <span>${data.name}</span>
+                            </div>
 
-        //                         `
-        //     }
-        //     messageBody.insertAdjacentHTML('beforeend', htmlMessage);
+                                `
+            }
+            messageBody.insertAdjacentHTML('beforeend', htmlMessage);
 
-        // }
+        }
 
         //格式化顯示的時間
         function formatTime(dt) {
