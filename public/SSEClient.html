@@ -27,6 +27,7 @@
         //開始計時
         btnStart.addEventListener("click", event => {
             const url = "http://localhost:8080/events"; //SSE Server URL
+            //建立物件
            source =  new EventSource(url);
            source.addEventListener('open',event=>{
             console.log('連線成功')

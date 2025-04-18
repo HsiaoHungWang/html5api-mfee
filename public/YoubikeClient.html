@@ -22,15 +22,30 @@
         integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous">
         </script>
     <script>
+    const div1 = document.querySelector('#content');
+    
+    //     //建立 EventSource 物件
+     const url = "http://localhost:8080/youbike";
+    //   const source = new EventSource(url);
+
+    //   source.addEventListener('message', event=>{
+    //     div1.textContent = event.data;
+    //   })
+
+
+
+
+
         const row = document.querySelector('.row');
         let i = 0;
         //todo1：建立EventSource物件，與 Server Sent Event Server ('http://localhost:8080/youbike')建立連線
-        const source = ____________________________;
+       const source = new EventSource(url)
 
 
         //todo2：接收Server傳回來的結果，要使用甚麼事件，將______換成適當的事件
-        source.addEventListener("____________", event => {
-            const datas = JSON.parse(____________);  //todo3：將______換成正確的取得資料的語法
+        source.addEventListener("message", event => {
+            const datas = JSON.parse(event.data);  //todo3：將______換成正確的取得資料的語法
+
             const htmlYoubike = datas.map(data => {
                 return (`
                      <div class="col">
@@ -52,7 +67,7 @@
                                 `);
             })
 
-            row.innerHTML = htmlYoubike;
+            row.innerHTML = htmlYoubike.join("");
 
         });
 

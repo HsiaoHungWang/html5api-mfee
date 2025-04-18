@@ -8,8 +8,7 @@ const server = http.createServer((req, res) => {
       'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache',
       'Connection': 'keep-alive',
-      'Access-Control-Allow-Origin': '*' // 允許所有來源
-
+      'Access-Control-Allow-Origin': '*' // 允許所有來源 CORS http://localhost:3001(JS) => http://localhost:8000/events
     });
   
     // 格式化時間函式

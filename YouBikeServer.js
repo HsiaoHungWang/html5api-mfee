@@ -18,10 +18,11 @@ const server = http.createServer((req, res) => {
     
     const intervalId = setInterval(() => {
      //取得YouBike資料
+     //request HTTPClient 
       request('https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbike_immediate.json', {encoding: null}, function(err, response, body){
         res.write(`data: ${body.toString()}\n\n`);       
       });     
-    }, 1000);
+    }, 1000 * 60);
 
     // 客戶端斷線處理
     req.on('close', () => {
