@@ -1,6 +1,10 @@
 {
   "name": "MFEE App",
   "short_name": "MFEE",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
   "icons": [
     {
       "src": "icons/icon-48x48.jpg",
@@ -52,9 +56,5 @@
       "sizes": "512x512",
       "type": "image/jpeg"
     }
-  ],
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000"
+  ]
 }
