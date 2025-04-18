@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>語法複習</title>
+  <style>
+    canvas{
+      border:1px solid gray;
+    }
+  </style>
+</head>
+<body>
+  <button id="button1">暫存</button>
+  <hr />
+  <canvas id="canvas" width="800" height="400"></canvas>
+
+  <script>
+   const btn1 = document.querySelector('#button1');
+   
+
+    //建立物件
+    const canvas = document.querySelector('#canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.strokeStyle = "green";
+    ctx.lineWidth = 10;
+    let flag = false;
+
+    //從 localStorage 讀圖
+    const str= localStorage.getItem('c1');
+    if(str != null){
+      const img = new Image();
+      img.src = str;
+      img.addEventListener('load', ()=>{
+        ctx.drawImage(img, 0, 0)
+      })
+    }
+
+
+    //mousedown、mouseup、mousemove
+   canvas.addEventListener('mousedown',event=>{
+        flag = true;
+        ctx.beginPath();
+        ctx.moveTo(event.offsetX,event.offsetY);
+   })
+
+    canvas.addEventListener('mousemove',event=>{
+      if(flag){
+       // console.log(`${event.offsetX},${event.offsetY}`);
+        ctx.lineTo(event.offsetX,event.offsetY);
+        ctx.stroke();
+      }
+      
+    })
+    canvas.addEventListener('mouseup',event=>{
+        flag = false;
+   })
+
+    
+    //有哪些方法跟屬性可以使用
+   
+
+    //
+    btn1.addEventListener('click',event=>{
+      //把canvas內容存到localStorage
+      localStorage.setItem('c1', canvas.toDataURL("image/png")); //base64 string 存進 localStorage
+    })
+    
+  
+  </script>
+</body>
+</html>
